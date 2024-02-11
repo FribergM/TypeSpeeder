@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 public class MenuTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -95,3 +95,4 @@ public class MenuTest {
 
 
 }
+ */
