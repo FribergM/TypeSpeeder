@@ -1,6 +1,8 @@
 package se.ju23.typespeeder.data;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,14 +16,13 @@ import java.util.List;
 public class Player{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
+    private String username;
+    private String password;
+    private String alias;
 
-    String username;
-    String password;
-    String alias;
-
-    @OneToMany
-    List<Result> resultList;
+    @OneToMany(mappedBy = "player",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Result> resultList;
 
     public Player(String username, String password, String alias){
         this.username = username;
@@ -31,5 +32,25 @@ public class Player{
     }
     public Player(){
 
+    }
+    public void addResult(Result result){
+        result.setPlayer(this);
+        resultList.add(result);
+
+    }
+
+    public List<Result> getResultList(){
+        return resultList;
+    }
+
+    @Override
+    public String toString(){
+        return "Player{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", alias='" + alias + '\'' +
+                ", resultList=" + resultList +
+                '}';
     }
 }

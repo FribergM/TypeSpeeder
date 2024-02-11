@@ -1,6 +1,8 @@
 package se.ju23.typespeeder.data;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -8,16 +10,16 @@ import jakarta.persistence.ManyToOne;
 public class Result{
 
     @Id
-    private Long id;
-
-    int wpm;
-    float accuracy;
-    int streak;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private int wpm;
+    private double accuracy;
+    private int streak;
 
     @ManyToOne
-    Player player;
+    private Player player;
 
-    public Result(int wpm, float accuracy, int streak){
+    public Result(int wpm, double accuracy, int streak){
         this.wpm = wpm;
         this.accuracy = accuracy;
         this.streak = streak;
@@ -27,7 +29,17 @@ public class Result{
 
     }
 
-    public Long getId(){
-        return id;
+    public void setPlayer(Player player){
+        this.player = player;
+    }
+
+    @Override
+    public String toString(){
+        return "Result{" +
+                "id=" + id +
+                ", wpm=" + wpm +
+                ", accuracy=" + accuracy +
+                ", streak=" + streak +
+                '}';
     }
 }
