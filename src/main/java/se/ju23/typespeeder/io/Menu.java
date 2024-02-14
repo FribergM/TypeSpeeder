@@ -38,6 +38,14 @@ public class Menu implements MenuService{
     }
 
     @Override
+    public void displayGameMenu(){
+        System.out.println();
+        for(String s : getGameMenuOptions()){
+            System.out.println(s);
+        }
+    }
+
+    @Override
     public List<String> getMenuOptions(){
         return menuOptions;
     }
