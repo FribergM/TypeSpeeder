@@ -32,7 +32,7 @@ public class MenuSwe implements MenuService{
     @Override
     public void displayMenu(){
         System.out.println();
-        for(String s : menuOptions){
+        for(String s : getMenuOptions()){
             System.out.println(s);
         }
     }
