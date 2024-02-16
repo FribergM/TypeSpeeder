@@ -53,17 +53,17 @@ public class Menu implements MenuService{
         switch(langChoice){
             case "swedish","svenska" -> {
                 this.language = new Swedish();
+                io.output(language.languageSelectedPrompt());
             }
             case "english","engelska" -> {
                 this.language = new English();
+                io.output(language.languageSelectedPrompt());
             }
             default -> {
                 io.output("Invalid input. Default language provided.");
                 this.language = new English();
             }
         }
-
-        io.output(language.languageSelectedPrompt());
 
     }
 

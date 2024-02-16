@@ -13,7 +13,10 @@ public class AccountManager{
     private MenuService menu;
     private Player currentPlayer;
 
-    public AccountManager(PlayerRepository playerRepo,IO io,MenuService menu,Player currentPlayer){
+    public AccountManager(PlayerRepository playerRepo,
+                          IO io,
+                          MenuService menu,
+                          Player currentPlayer){
         this.playerRepo = playerRepo;
         this.io = io;
         this.menu = menu;

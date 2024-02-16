@@ -15,8 +15,12 @@ public class GameController{
     private AccountManager accountManager;
     private Player currentPlayer;
 
-    public GameController(Game game, IO io, MenuService menu,
-                          PlayerRepository playerRepo, AccountManager accountManager,Player currentPlayer){
+    public GameController(Game game,
+                          IO io,
+                          MenuService menu,
+                          PlayerRepository playerRepo,
+                          AccountManager accountManager,
+                          Player currentPlayer){
         this.game = game;
         this.io = io;
         this.menu = menu;
@@ -53,33 +57,6 @@ public class GameController{
         }while(!playerChoice.equals("0"));
 
     }
-
-//    private void changeLanguage(){
-//
-//        boolean continueLoop = true;
-//
-//        do{
-//            String languagePrompt = menu.changeLanguagePrompt();
-//            io.output(languagePrompt);
-//
-//            String choice = io.input();
-//
-//            switch(choice){
-//                case "1" -> {
-//                    if(languagePrompt.contains("Swedish")){
-//                        menu = new MenuSwe();
-//                    }else{
-//                        menu = new Menu();
-//                    }
-//                    accountManager.setMenu(menu);
-//                    continueLoop = false;
-//                }
-//                case "2" -> continueLoop = false;
-//                default -> io.output(menu.menuErrorPrompt());
-//            }
-//        }while(continueLoop);
-//
-//    }
 
     private void gameMenuSelection(){
 
