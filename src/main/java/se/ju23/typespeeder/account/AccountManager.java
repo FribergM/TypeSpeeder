@@ -20,10 +20,6 @@ public class AccountManager{
         this.currentPlayer = currentPlayer;
     }
 
-    public void setMenu(MenuService menu){
-        this.menu = menu;
-    }
-
     public boolean login(){
         io.output(menu.enterUsernamePrompt());
         String username = io.input();

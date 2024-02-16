@@ -4,11 +4,7 @@ import se.ju23.typespeeder.account.AccountManager;
 import se.ju23.typespeeder.data.Player;
 import se.ju23.typespeeder.data.PlayerRepository;
 import se.ju23.typespeeder.io.IO;
-import se.ju23.typespeeder.io.Menu;
 import se.ju23.typespeeder.io.MenuService;
-import se.ju23.typespeeder.io.MenuSwe;
-
-import java.util.List;
 
 public class GameController{
 
@@ -49,7 +45,7 @@ public class GameController{
                         gameMenuSelection();
                     }
                 }
-                case "3" -> changeLanguage();
+                case "3" -> menu.changeLanguage();
                 case "0" -> io.exit();
                 default -> io.output(menu.menuErrorPrompt());
             }
@@ -58,32 +54,32 @@ public class GameController{
 
     }
 
-    private void changeLanguage(){
-
-        boolean continueLoop = true;
-
-        do{
-            String languagePrompt = menu.changeLanguagePrompt();
-            io.output(languagePrompt);
-
-            String choice = io.input();
-
-            switch(choice){
-                case "1" -> {
-                    if(languagePrompt.contains("Swedish")){
-                        menu = new MenuSwe();
-                    }else{
-                        menu = new Menu();
-                    }
-                    accountManager.setMenu(menu);
-                    continueLoop = false;
-                }
-                case "2" -> continueLoop = false;
-                default -> io.output(menu.menuErrorPrompt());
-            }
-        }while(continueLoop);
-
-    }
+//    private void changeLanguage(){
+//
+//        boolean continueLoop = true;
+//
+//        do{
+//            String languagePrompt = menu.changeLanguagePrompt();
+//            io.output(languagePrompt);
+//
+//            String choice = io.input();
+//
+//            switch(choice){
+//                case "1" -> {
+//                    if(languagePrompt.contains("Swedish")){
+//                        menu = new MenuSwe();
+//                    }else{
+//                        menu = new Menu();
+//                    }
+//                    accountManager.setMenu(menu);
+//                    continueLoop = false;
+//                }
+//                case "2" -> continueLoop = false;
+//                default -> io.output(menu.menuErrorPrompt());
+//            }
+//        }while(continueLoop);
+//
+//    }
 
     private void gameMenuSelection(){
 

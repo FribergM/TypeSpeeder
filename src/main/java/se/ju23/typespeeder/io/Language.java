@@ -2,14 +2,10 @@ package se.ju23.typespeeder.io;
 
 import java.util.List;
 
-public interface MenuService{
-
-    void displayMenu();
-    void displayGameMenu();
+public interface Language{
     List<String> getMenuOptions();
     List<String> getGameMenuOptions();
-    void chooseLanguage();
-    void changeLanguage();
+    String languageSelectedPrompt();
     String changeLanguagePrompt();
     String enterUsernamePrompt();
     String updateUsernamePrompt();

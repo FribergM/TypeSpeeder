@@ -29,9 +29,8 @@ public class TypeSpeederApplication implements CommandLineRunner {
         SystemIO io = new SystemIO();
         MenuService menu = new Menu();
         Player player = new Player();
+
         AccountManager accountManager = new AccountManager(playerRepo,io,menu,player);
-
-
         GameController gameController = new GameController(game, io, menu, playerRepo, accountManager, player);
         gameController.run();
     }
