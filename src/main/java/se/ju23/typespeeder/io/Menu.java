@@ -20,7 +20,7 @@ public class Menu implements MenuService{
 
         System.out.println();
         for(String s : getMenuOptions()){
-            System.out.println(s);
+            io.output(s);
         }
     }
 
@@ -34,11 +34,17 @@ public class Menu implements MenuService{
 
     @Override
     public List<String> getMenuOptions(){
+        if(language == null){
+            language = new English();
+        }
         return language.getMenuOptions();
     }
 
     @Override
     public List<String> getGameMenuOptions(){
+        if(language == null){
+            language = new English();
+        }
         return language.getGameMenuOptions();
     }
 

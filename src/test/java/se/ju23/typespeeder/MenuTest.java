@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuTest {
-    //TODO Check with Oskar if its ok to change Class package name.
+    //TODO Check with Oskar if its ok to change Class package name + add necessary components.
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -78,6 +78,10 @@ public class MenuTest {
 
     @Test
     public void testDisplayMenuCallsGetMenuOptionsAndReturnsAtLeastFive() {
+        String input = "svenska\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
         Menu menuMock = Mockito.spy(new Menu());
         menuMock.displayMenu();
         verify(menuMock, times(1)).getMenuOptions();
@@ -93,6 +97,10 @@ public class MenuTest {
 
     @Test
     public void menuShouldPrintAtLeastFiveOptions() {
+        String input = "svenska\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
         new Menu().displayMenu();
         long count = outContent.toString().lines().count();
         assertTrue(count >= 5, "The menu should print out at least 5 alternatives.");

@@ -1,21 +1,18 @@
 package se.ju23.typespeeder.io;
 
-import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
-@Component
 public class SystemIO implements IO{
 
-    Scanner input;
-
-    public SystemIO(){
-        input = new Scanner(System.in);
-    }
+    Scanner scanner;
 
     @Override
     public String input(){
+        if(scanner == null){
+            scanner = new Scanner(System.in);
+        }
         System.out.print("> ");
-        return input.nextLine();
+        return scanner.nextLine();
     }
 
     @Override
