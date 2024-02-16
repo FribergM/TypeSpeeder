@@ -33,12 +33,32 @@ public class Player{
     public Player(){
 
     }
+
     public void addResult(Result result){
         result.setPlayer(this);
         resultList.add(result);
 
     }
 
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setPassword(String password){
+        this.password = password;
+    }
+    public void setAlias(String alias){
+        this.alias = alias;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+    public String getPassword(){
+        return password;
+    }
+    public String getAlias(){
+        return alias;
+    }
     public List<Result> getResultList(){
         return resultList;
     }

@@ -14,16 +14,17 @@ public class SystemIO implements IO{
 
     @Override
     public String input(){
+        System.out.print("> ");
         return input.nextLine();
-    }
-
-    @Override
-    public int inputInt(){
-        return input.nextInt();
     }
 
     @Override
     public void output(String s){
         System.out.println("\n"+s);
+    }
+
+    @Override
+    public void exit(){
+        System.exit(0);
     }
 }
