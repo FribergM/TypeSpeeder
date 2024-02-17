@@ -30,7 +30,10 @@ public class GameController{
     }
 
     public void run(){
+        mainMenuSelection();
+    }
 
+    private void mainMenuSelection(){
         String playerChoice;
 
         do{
@@ -55,7 +58,6 @@ public class GameController{
             }
 
         }while(!playerChoice.equals("0"));
-
     }
 
     private void gameMenuSelection(){
@@ -76,6 +78,5 @@ public class GameController{
                 default -> io.output(menu.menuErrorPrompt());
             }
         }while(!playerChoice.equals("0"));
-
     }
 }

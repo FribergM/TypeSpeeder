@@ -1,5 +1,6 @@
 package se.ju23.typespeeder.io;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SystemIO implements IO{
@@ -18,6 +19,14 @@ public class SystemIO implements IO{
     @Override
     public void output(String s){
         System.out.println("\n"+s);
+    }
+
+    @Override
+    public void outputAll(List<String> list){
+        System.out.println();
+        for(String s : list){
+            System.out.println(s);
+        }
     }
 
     @Override

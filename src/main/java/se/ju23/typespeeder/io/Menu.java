@@ -13,23 +13,15 @@ public class Menu implements MenuService{
 
     @Override
     public void displayMenu(){
-
         if(language == null){
             chooseLanguage();
         }
-
-        System.out.println();
-        for(String s : getMenuOptions()){
-            io.output(s);
-        }
+        io.outputAll(getMenuOptions());
     }
 
     @Override
     public void displayGameMenu(){
-        System.out.println();
-        for(String s : getGameMenuOptions()){
-            System.out.println(s);
-        }
+        io.outputAll(getGameMenuOptions());
     }
 
     @Override
@@ -50,7 +42,6 @@ public class Menu implements MenuService{
 
     @Override
     public void chooseLanguage(){
-
         io.output("Välj språk (svenska/engelska):\nSelect language (swedish/english):");
         String langChoice = io.input();
         langChoice = langChoice.toLowerCase();

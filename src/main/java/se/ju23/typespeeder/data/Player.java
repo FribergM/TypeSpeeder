@@ -20,6 +20,8 @@ public class Player{
     private String username;
     private String password;
     private String alias;
+    @OneToOne
+    private Level level;
 
     @OneToMany(mappedBy = "player",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Result> resultList;
@@ -29,9 +31,16 @@ public class Player{
         this.password = password;
         this.alias = alias;
         this.resultList = new ArrayList<>();
+        this.level = new Level();
     }
     public Player(){
 
+    }
+    public boolean gainExp(int expGain){
+        return level.gainExp(expGain);
+    }
+    public void loseExp(int expLoss){
+        level.loseExp(expLoss);
     }
 
     public void addResult(Result result){
@@ -58,6 +67,15 @@ public class Player{
     }
     public String getAlias(){
         return alias;
+    }
+    public int getLevel(){
+        return level.getLevel();
+    }
+    public int getExp(){
+        return level.getExp();
+    }
+    public int getExpReq(){
+        return level.getExpReq();
     }
     public List<Result> getResultList(){
         return resultList;
