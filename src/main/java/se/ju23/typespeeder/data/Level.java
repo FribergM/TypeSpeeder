@@ -1,22 +1,17 @@
 package se.ju23.typespeeder.data;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 
 import java.util.Map;
 
 @Entity
 public class Level{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int exp;
-    @Transient
-    private int expReq;
-
     private static final int DEFAULT_LEVEL = 1;
     private static final int DEFAULT_EXP_REQ = 100;
     private static final Map<Integer, Integer> EXP_REQUIREMENTS = Map.of(
@@ -25,8 +20,20 @@ public class Level{
             3,300,
             4,0);
 
+    @Id
+    @Column(name = "playerId")
+    private int id;
+    private int level;
+    private int exp;
+    @Transient
+    private int expReq;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "playerId")
+    private Player player;
+
     public Level(){
-        id = DEFAULT_LEVEL;
+        level = DEFAULT_LEVEL;
         expReq = DEFAULT_EXP_REQ;
     }
 
@@ -40,9 +47,9 @@ public class Level{
     }
 
     private boolean updateLevel(){
-        int nextLevel = id + 1;
+        int nextLevel = level + 1;
         if(exp <= EXP_REQUIREMENTS.getOrDefault(nextLevel,Integer.MAX_VALUE)){
-            id = nextLevel;
+            level = nextLevel;
             exp = 0;
             expReq = EXP_REQUIREMENTS.getOrDefault(nextLevel,0);
             return true;
@@ -51,7 +58,7 @@ public class Level{
     }
 
     public int getLevel(){
-        return id;
+        return level;
     }
 
     public int getExp(){
@@ -60,5 +67,9 @@ public class Level{
 
     public int getExpReq(){
         return expReq;
+    }
+
+    public void setPlayer(Player player){
+        this.player = player;
     }
 }

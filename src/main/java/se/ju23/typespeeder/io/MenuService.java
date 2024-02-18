@@ -6,20 +6,11 @@ public interface MenuService{
 
     void displayMenu();
     void displayGameMenu();
+    void displayGameModes();
+    void displayDifficulties();
     List<String> getMenuOptions();
     List<String> getGameMenuOptions();
     void chooseLanguage();
     void changeLanguage();
-    String changeLanguagePrompt();
-    String enterUsernamePrompt();
-    String updateUsernamePrompt();
-    String enterPasswordPrompt();
-    String updatePasswordPrompt();
-    String updateAliasPrompt();
-    String menuErrorPrompt();
-    String loginErrorPrompt();
-    String uNameTakenPrompt();
-    String invalidUsernamePrompt();
-    String invalidPasswordPrompt();
-    String invalidAliasPrompt();
+    Language getLanguage();
 }

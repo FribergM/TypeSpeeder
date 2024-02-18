@@ -31,6 +31,25 @@ public class Swedish implements Language{
     }
 
     @Override
+    public String getGameModeOptions(){
+        return "Välj spelläge!\n" +
+                "1. Skriv hela meningar.\n" +
+                "2. Skriv ord.\n" +
+                "3. Skriv bokstäver.\n" +
+                "4. Skriv specialtecken.\n" +
+                "0. Återvänd.";
+    }
+
+    @Override
+    public String getDifficultyOptions(){
+        return "Välj svårighetsgrad!\n" +
+                "1. Lätt.\n" +
+                "2. Medium.\n" +
+                "3. Svårt.\n" +
+                "0. Återvänd.";
+    }
+
+    @Override
     public String languageSelectedPrompt(){
         return "Svenska valt.";
     }

@@ -5,6 +5,8 @@ import java.util.List;
 public interface Language{
     List<String> getMenuOptions();
     List<String> getGameMenuOptions();
+    String getGameModeOptions();
+    String getDifficultyOptions();
     String languageSelectedPrompt();
     String changeLanguagePrompt();
     String enterUsernamePrompt();

@@ -16,15 +16,17 @@ import java.util.List;
 public class Player{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     private String username;
     private String password;
     private String alias;
-    @OneToOne
+    @OneToOne(mappedBy = "player",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Level level;
 
     @OneToMany(mappedBy = "player",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Result> resultList;
+
+
 
     public Player(String username, String password, String alias){
         this.username = username;
@@ -32,6 +34,7 @@ public class Player{
         this.alias = alias;
         this.resultList = new ArrayList<>();
         this.level = new Level();
+        this.level.setPlayer(this);
     }
     public Player(){
 

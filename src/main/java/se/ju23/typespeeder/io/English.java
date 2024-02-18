@@ -31,6 +31,25 @@ public class English implements Language{
     }
 
     @Override
+    public String getGameModeOptions(){
+        return "Choose a game-mode!\n" +
+                "1. Write full sentence.\n" +
+                "2. Write words.\n" +
+                "3. Write letters.\n" +
+                "4. Write special characters.\n" +
+                "0. Go back.";
+    }
+
+    @Override
+    public String getDifficultyOptions(){
+        return "Choose difficulty!\n" +
+                "1. Easy.\n" +
+                "2. Medium.\n" +
+                "3. Hard.\n" +
+                "0. Go back";
+    }
+
+    @Override
     public String languageSelectedPrompt(){
         return "English selected.";
     }

@@ -25,6 +25,16 @@ public class Menu implements MenuService{
     }
 
     @Override
+    public void displayGameModes(){
+        io.output(language.getGameModeOptions());
+    }
+
+    @Override
+    public void displayDifficulties(){
+        io.output(language.getDifficultyOptions());
+    }
+
+    @Override
     public List<String> getMenuOptions(){
         if(language == null){
             language = new English();
@@ -69,7 +79,7 @@ public class Menu implements MenuService{
         boolean continueLoop = true;
 
         do{
-            String languagePrompt = changeLanguagePrompt();
+            String languagePrompt = language.changeLanguagePrompt();
             io.output(languagePrompt);
 
             String choice = io.input();
@@ -84,7 +94,7 @@ public class Menu implements MenuService{
                     continueLoop = false;
                 }
                 case "2" -> continueLoop = false;
-                default -> io.output(menuErrorPrompt());
+                default -> io.output(language.menuErrorPrompt());
             }
 
             io.output(language.languageSelectedPrompt());
@@ -92,63 +102,7 @@ public class Menu implements MenuService{
         }while(continueLoop);
     }
 
-    @Override
-    public String changeLanguagePrompt(){
-        return language.changeLanguagePrompt();
-    }
-
-    @Override
-    public String enterUsernamePrompt(){
-        return language.enterUsernamePrompt();
-    }
-
-    @Override
-    public String updateUsernamePrompt(){
-        return language.updateUsernamePrompt();
-    }
-
-    @Override
-    public String enterPasswordPrompt(){
-        return language.enterPasswordPrompt();
-    }
-
-    @Override
-    public String updatePasswordPrompt(){
-        return language.updatePasswordPrompt();
-    }
-
-    @Override
-    public String updateAliasPrompt(){
-        return language.updateAliasPrompt();
-    }
-
-    @Override
-    public String menuErrorPrompt(){
-        return language.menuErrorPrompt();
-    }
-
-    @Override
-    public String loginErrorPrompt(){
-        return language.loginErrorPrompt();
-    }
-
-    @Override
-    public String uNameTakenPrompt(){
-        return language.uNameTakenPrompt();
-    }
-
-    @Override
-    public String invalidUsernamePrompt(){
-        return language.invalidUsernamePrompt();
-    }
-
-    @Override
-    public String invalidPasswordPrompt(){
-        return language.invalidPasswordPrompt();
-    }
-
-    @Override
-    public String invalidAliasPrompt(){
-        return language.invalidAliasPrompt();
+    public Language getLanguage(){
+        return language;
     }
 }

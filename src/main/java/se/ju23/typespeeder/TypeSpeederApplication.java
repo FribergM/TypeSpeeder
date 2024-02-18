@@ -10,8 +10,8 @@ import se.ju23.typespeeder.data.PlayerRepository;
 import se.ju23.typespeeder.io.Menu;
 import se.ju23.typespeeder.io.MenuService;
 import se.ju23.typespeeder.io.SystemIO;
+import se.ju23.typespeeder.logic.Challenge;
 import se.ju23.typespeeder.logic.GameController;
-import se.ju23.typespeeder.logic.TypingGame;
 
 @SpringBootApplication(scanBasePackages = "se.ju23.typespeeder.data")
 public class TypeSpeederApplication implements CommandLineRunner {
@@ -25,7 +25,7 @@ public class TypeSpeederApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        TypingGame game = new TypingGame();
+        Challenge game = new Challenge();
         SystemIO io = new SystemIO();
         MenuService menu = new Menu();
         Player player = new Player();
