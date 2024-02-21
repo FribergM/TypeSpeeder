@@ -3,28 +3,33 @@ package se.ju23.typespeeder.logic;
 import se.ju23.typespeeder.account.AccountManager;
 import se.ju23.typespeeder.data.Player;
 import se.ju23.typespeeder.data.PlayerRepository;
+import se.ju23.typespeeder.data.Result;
+import se.ju23.typespeeder.data.Text;
+import se.ju23.typespeeder.data.TextRepository;
 import se.ju23.typespeeder.io.IO;
 import se.ju23.typespeeder.io.MenuService;
 
+import java.util.List;
+
 public class GameController{
 
-    private Challenge game;
     private IO io;
     private MenuService menu;
     private PlayerRepository playerRepo;
+    private TextRepository textRepo;
     private AccountManager accountManager;
     private Player currentPlayer;
 
-    public GameController(Challenge game,
-                          IO io,
+    public GameController(IO io,
                           MenuService menu,
                           PlayerRepository playerRepo,
+                          TextRepository textRepo,
                           AccountManager accountManager,
                           Player currentPlayer){
-        this.game = game;
         this.io = io;
         this.menu = menu;
         this.playerRepo = playerRepo;
+        this.textRepo = textRepo;
         this.accountManager = accountManager;
         this.currentPlayer = currentPlayer;
     }
@@ -89,10 +94,22 @@ public class GameController{
             playerChoice = io.input();
 
             switch(playerChoice){
-                case "1" -> difficultySelection(language,1);
-                case "2" -> difficultySelection(language,2);
-                case "3" -> difficultySelection(language,3);
-                case "4" -> difficultySelection(language,4);
+                case "1" -> {
+                    difficultySelection(language,1);
+                    return;
+                }
+                case "2" -> {
+                    difficultySelection(language,2);
+                    return;
+                }
+                case "3" -> {
+                    difficultySelection(language,3);
+                    return;
+                }
+                case "4" -> {
+                    difficultySelection(language,4);
+                    return;
+                }
                 case "0" -> {}//TODO RETURN TO MENU lang prompts
                 default -> io.output(menu.getLanguage().menuErrorPrompt());
             }
@@ -107,17 +124,54 @@ public class GameController{
             playerChoice = io.input();
 
             switch(playerChoice){
-                case "1" -> play(language,gameMode,1);
-                case "2" -> play(language,gameMode,2);
-                case "3" -> play(language,gameMode,3);
+                case "1" -> {
+                    play(language,gameMode,1);
+                    return;
+                }
+                case "2" -> {
+                    play(language,gameMode,2);
+                    return;
+                }
+                case "3" -> {
+                    play(language,gameMode,3);
+                    return;
+                }
                 case "0" -> {}//TODO RETURN TO MENU lang prompts
                 default -> io.output(menu.getLanguage().menuErrorPrompt());
             }
         }while(!playerChoice.equals("0"));
     }
     private void play(Boolean yesNo, int gameMode, int difficulty){
-        game.playInEnglish(yesNo);
-        game.setGameMode(gameMode);
-        game.setDifficulty(difficulty);
+        List<Text> texts = textRepo.findAll();
+        Challenge challenge = new Challenge(yesNo,gameMode,difficulty,texts);
+//        countdown();
+        String lettersToType = challenge.lettersToType(io);
+        System.out.println("\n"+lettersToType);
+        Result sessionResult = challenge.startChallenge(io, lettersToType);
+        if(sessionResult == null){
+            //TODO PROMPTS cant leave empty.
+            io.output("Can't leave empty.");
+            return;
+        }
+        finishSession(sessionResult);
+
+    }
+    private void countdown(){
+        try{
+            for(int i=5;i>0;i--){
+                //TODO Countdown lang prompts
+                io.print("\nChallenge starting in: "+i);
+                Thread.sleep(1000);
+            }
+        }catch(InterruptedException e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+    private void finishSession(Result sessionResult){
+        sessionResult.setPlayer(currentPlayer);
+        io.print("RESULTAT:\n---------");
+        io.output(sessionResult.toString());
+        //TODO FIX LEVELUP + SAVE
     }
 }

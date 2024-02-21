@@ -22,6 +22,21 @@ public class SystemIO implements IO{
     }
 
     @Override
+    public void print(String s){
+        System.out.print(RESET +s);
+    }
+
+    @Override
+    public void printRed(String s){
+        System.out.print(RED+s+ RESET);
+    }
+
+    @Override
+    public void printCyan(String s){
+        System.out.print(CYAN+s+ RESET);
+    }
+
+    @Override
     public void outputAll(List<String> list){
         System.out.println();
         for(String s : list){

@@ -34,14 +34,17 @@ public class AccountManager{
         if(password.equals("0")){
             return false;
         }
-
         currentPlayer = playerRepo.findByUsernameAndPassword(username,password);
 
         if(currentPlayer == null){
             io.output(menu.getLanguage().loginErrorPrompt());
             return false;
-        }else{
+        }else if(currentPlayer.getUsername().equalsIgnoreCase(username) && currentPlayer.getPassword().equals(password)){
             return true;
+        }else{
+            currentPlayer = null;
+            io.output(menu.getLanguage().loginErrorPrompt());
+            return false;
         }
 
     }

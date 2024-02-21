@@ -35,11 +35,16 @@ public class Result{
 
     @Override
     public String toString(){
-        return "Result{" +
-                "id=" + id +
-                ", wpm=" + wpm +
-                ", accuracy=" + accuracy +
-                ", streak=" + streak +
-                '}';
+        return "WPM: " + wpm +
+                "\nACCURACY: " + accuracy*100+"%"+
+                "\nSTREAK: " + streak;
+
+
+//                "Result{" +
+//                "id=" + id +
+//                ", wpm=" + wpm +
+//                ", accuracy=" + accuracy +
+//                ", streak=" + streak +
+//                '}';
     }
 }
