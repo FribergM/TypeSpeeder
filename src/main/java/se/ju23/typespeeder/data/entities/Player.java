@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import se.ju23.typespeeder.data.services.Util;
+import se.ju23.typespeeder.services.Util;
 
 import java.util.ArrayList;
 import java.util.Comparator;

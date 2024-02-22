@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.data.services;
+package se.ju23.typespeeder.services;
 
 public class Util{
     public static String centerText(String s, int width) {

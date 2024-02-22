@@ -7,13 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import se.ju23.typespeeder.account.AccountManager;
 import se.ju23.typespeeder.data.repositories.TextRepository;
 import se.ju23.typespeeder.data.repositories.PlayerRepository;
-import se.ju23.typespeeder.data.services.LeaderboardService;
+import se.ju23.typespeeder.services.LeaderboardService;
 import se.ju23.typespeeder.ui.Menu;
 import se.ju23.typespeeder.ui.MenuService;
 import se.ju23.typespeeder.ui.SystemIO;
 import se.ju23.typespeeder.logic.GameController;
 
-@SpringBootApplication(scanBasePackages = "se.ju23.typespeeder.data")
+@SpringBootApplication(scanBasePackages = {"se.ju23.typespeeder.data","se.ju23.typespeeder.services"})
 public class TypeSpeederApplication implements CommandLineRunner {
 
     @Autowired

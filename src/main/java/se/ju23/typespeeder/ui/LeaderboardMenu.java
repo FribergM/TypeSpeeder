@@ -1,7 +1,7 @@
 package se.ju23.typespeeder.ui;
 
 import se.ju23.typespeeder.data.entities.Player;
-import se.ju23.typespeeder.data.services.LeaderboardService;
+import se.ju23.typespeeder.services.LeaderboardService;
 
 
 public class LeaderboardMenu{
@@ -19,12 +19,7 @@ public class LeaderboardMenu{
     public void global(){
         String playerChoice;
         do{
-            //TODO Lang prompt
-//            menu.displayGlobalLBOptions();
-            io.println("1. GlobalWpm");
-            io.println("2. GlobalAcc");
-            io.println("3. GlobalStreak");
-            io.println("4. GlobalScore");
+            menu.displayGlobalLBOptions();
 
             playerChoice = io.input();
 
@@ -41,12 +36,7 @@ public class LeaderboardMenu{
     public void personal(){
         String playerChoice;
         do{
-            //TODO Lang prompt
-//            menu.displayPersonalLBOptions();
-            io.println("1. PersonalWpm");
-            io.println("2. PersonalAcc");
-            io.println("3. PersonalStreak");
-            io.println("4. PersonalScore");
+            menu.displayPersonalLBOptions();
 
             playerChoice = io.input();
 
@@ -62,77 +52,76 @@ public class LeaderboardMenu{
     }
 
     public void printRecentResults(){
-//        io.print(menu.getLanguage().recentResultsPrompt());
+        io.print(menu.getLanguage().recentResultsPrompt());
         String print = currentPlayer.lastTenResults();
         if(print.isBlank()){
-            //TODO No results prompt
+            io.println(menu.getLanguage().noResultsPrompt());
             return;
         }
         io.println(print);
-        //TODO Enter to return lang prompts
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
 
     private void printPersonalWpm(){
-//        io.print(menu.getLanguage().personalWpmPrompt());
+        io.print(menu.getLanguage().personalWpmPrompt());
         String print = currentPlayer.resultsByWpm();
         if(print.isBlank()){
-            //TODO No results prompt
+            io.println(menu.getLanguage().noResultsPrompt());
             return;
         }
         io.println(print);
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void printPersonalAccuracy(){
-//        io.print(menu.getLanguage().personalAccPrompt());
+        io.print(menu.getLanguage().personalAccPrompt());
         String print = currentPlayer.resultsByAccuracy();
         if(print.isBlank()){
-            //TODO No results prompt
+            io.println(menu.getLanguage().noResultsPrompt());
             return;
         }
         io.println(print);
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void printPersonalStreak(){
-//        io.print(menu.getLanguage().personalStreakPrompt());
+        io.print(menu.getLanguage().personalStreakPrompt());
         String print = currentPlayer.resultsByStreak();
         if(print.isBlank()){
-            //TODO No results prompt
+            io.println(menu.getLanguage().noResultsPrompt());
             return;
         }
         io.println(print);
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void printPersonalScore(){
-//        io.print(menu.getLanguage().personalScorePrompt());
+        io.print(menu.getLanguage().personalScorePrompt());
         String print = currentPlayer.resultsByScore();
         if(print.isBlank()){
-            //TODO No results prompt
+            io.println(menu.getLanguage().noResultsPrompt());
             return;
         }
         io.println(print);
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
 
     private void printGlobalWpm(){
-//        io.print(menu.getLanguage().globalWpmPrompt());
+        io.print(menu.getLanguage().globalWpmPrompt());
         io.println(lbService.wpm());
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void printGlobalAccuracy(){
-//        io.print(menu.getLanguage().globalAccPrompt());
+        io.print(menu.getLanguage().globalAccPrompt());
         io.println(lbService.accuracy());
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void printGlobalStreak(){
-//        io.print(menu.getLanguage().globalStreakPrompt());
+        io.print(menu.getLanguage().globalStreakPrompt());
         io.println(lbService.streak());
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void printGlobalScore(){
-//        io.print(menu.getLanguage().globalScorePrompt());
+        io.print(menu.getLanguage().globalScorePrompt());
         io.println(lbService.score());
-        io.input("[ENTER]");
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
 
 }

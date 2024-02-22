@@ -8,6 +8,7 @@ public interface IO{
     String RESET = "\033[0m";
     String input();
     String input(String s);
+    void println();
     void println(String s);
     void print(String s);
     void printRed(String s);

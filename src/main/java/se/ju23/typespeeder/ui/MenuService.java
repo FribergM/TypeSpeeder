@@ -8,6 +8,10 @@ public interface MenuService{
     void displayGameMenu();
     void displayGameModes();
     void displayDifficulties();
+    void displayAccountSettings();
+    void displayLeaderboardOptions();
+    void displayGlobalLBOptions();
+    void displayPersonalLBOptions();
     List<String> getMenuOptions();
     List<String> getGameMenuOptions();
     void chooseLanguage();

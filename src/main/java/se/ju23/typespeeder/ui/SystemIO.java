@@ -27,6 +27,11 @@ public class SystemIO implements IO{
     }
 
     @Override
+    public void println(){
+        System.out.println();
+    }
+
+    @Override
     public void println(String s){
         System.out.println("\n"+s);
     }

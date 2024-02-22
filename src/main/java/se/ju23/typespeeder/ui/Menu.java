@@ -35,6 +35,26 @@ public class Menu implements MenuService{
     }
 
     @Override
+    public void displayAccountSettings(){
+        io.println(language.getAccountSettings());
+    }
+
+    @Override
+    public void displayLeaderboardOptions(){
+        io.println(language.getLeaderboardOptions());
+    }
+
+    @Override
+    public void displayGlobalLBOptions(){
+        io.println(language.getGlobalLBOptions());
+    }
+
+    @Override
+    public void displayPersonalLBOptions(){
+        io.println(language.getPersonalLBOptions());
+    }
+
+    @Override
     public List<String> getMenuOptions(){
         if(language == null){
             language = new English();

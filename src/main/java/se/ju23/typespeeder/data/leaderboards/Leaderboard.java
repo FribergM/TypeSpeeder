@@ -5,7 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import org.hibernate.annotations.Immutable;
-import se.ju23.typespeeder.data.services.Util;
+import se.ju23.typespeeder.services.Util;
 
 @Entity
 @Immutable

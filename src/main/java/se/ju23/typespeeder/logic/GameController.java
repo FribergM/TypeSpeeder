@@ -7,7 +7,8 @@ import se.ju23.typespeeder.data.repositories.PlayerRepository;
 import se.ju23.typespeeder.data.entities.Result;
 import se.ju23.typespeeder.data.entities.Text;
 import se.ju23.typespeeder.data.repositories.TextRepository;
-import se.ju23.typespeeder.data.services.LeaderboardService;
+import se.ju23.typespeeder.services.LeaderboardService;
+import se.ju23.typespeeder.services.Util;
 import se.ju23.typespeeder.ui.IO;
 import se.ju23.typespeeder.ui.LeaderboardMenu;
 import se.ju23.typespeeder.ui.MenuService;
@@ -84,10 +85,9 @@ public class GameController{
             switch(playerChoice){
                 case "1" -> gameModeSelection(true);
                 case "2" -> gameModeSelection(false);
-                //TODO Fix this & Add lang prompts
                 case "3" -> leaderboardSelection();
-//                case "4" -> accountSettingSelection();
-                case "0" -> io.println("Logging out...");
+                case "4" -> accountSettingSelection();
+                case "0" -> io.println(menu.getLanguage().logoutPrompt());
                 default -> io.println(menu.getLanguage().menuErrorPrompt());
             }
         }while(!playerChoice.equals("0"));
@@ -153,8 +153,7 @@ public class GameController{
     public void accountSettingSelection(){
         String playerChoice;
         do{
-            //TODO Lang prompt
-//            menu.displayAccountSettings();
+            menu.displayAccountSettings();
 
             playerChoice = io.input();
 
@@ -172,11 +171,7 @@ public class GameController{
         LeaderboardMenu leaderboardMenu = new LeaderboardMenu(currentPlayer,io,menu,lbService);
         String playerChoice;
         do{
-            //TODO Lang prompt
-//            menu.displayLeaderboardOptions();
-            io.println("1. GlobalLB");
-            io.println("2. PersonalLB");
-            io.println("3. RecentGames");
+            menu.displayLeaderboardOptions();
 
             playerChoice = io.input();
 
@@ -193,53 +188,58 @@ public class GameController{
     private void play(Boolean yesNo, int gameMode, int difficulty){
         List<Text> texts = textRepo.findAll();
         Challenge challenge = new Challenge(yesNo,gameMode,difficulty,texts);
-        //TODO remove this comment
-//        countdown();
+        provideInstruction();
+        countdown();
         String lettersToType = challenge.lettersToType(io);
+        io.println();
         //Comment this out when you don't want to cheat.
-        System.out.println("\n"+lettersToType);
+        //io.print(lettersToType+"\n");
+
         Result sessionResult = challenge.startChallenge(io, lettersToType);
         if(sessionResult == null){
-            //TODO PROMPTS cant leave empty.
-            io.println("Can't leave empty.");
+            io.println(menu.getLanguage().cantLeaveEmptyPrompt());
             return;
         }
-        int expChange = challenge.calculateExperience(sessionResult);
-        printResults(sessionResult);
-        printExpChange(expChange);
-        finishSession(sessionResult);
+        int expChange = challenge.calculateExperience(sessionResult,difficulty);
+        finishSession(sessionResult,expChange);
 
+    }
+    private void provideInstruction(){
+        io.println(menu.getLanguage().gameInstruction());
+        io.input(menu.getLanguage().enterKeyPrompt());
     }
     private void countdown(){
         try{
             for(int i=5;i>0;i--){
-                //TODO Countdown lang prompts
-                io.print("Challenge starting in: "+i);
+                io.print(menu.getLanguage().countdownPrompt()+i);
                 Thread.sleep(1000);
             }
+
         }catch(InterruptedException e){
             e.printStackTrace();
             throw new RuntimeException();
         }
     }
     private void printResults(Result sessionResult){
-        //TODO Result lang prompt
-        io.print("RESULTAT:\n---------");
-        io.println(sessionResult.toString());
+        io.print(menu.getLanguage().resultPrompt());
+        int length = sessionResult.toString().length();
+
+        io.print(Util.getFrameByLength(length-5));
+        io.print(sessionResult.toString());
+        io.println(Util.getFrameByLength(length-5));
     }
 
     private void printExpChange(int expChange){
         boolean levelUp;
-        //TODO lang prompts
         if(expChange >= 0){
             levelUp = currentPlayer.gainExp(expChange);
-            io.print("Exp Gain: "+ expChange);
+            io.print(menu.getLanguage().expGainPrompt()+ expChange);
             if(levelUp){
-                io.print("You leveled up to : "+currentPlayer.getLevel());
+                io.print(menu.getLanguage().levelUpPrompt()+currentPlayer.getLevel());
             }
         }else{
             currentPlayer.loseExp(expChange);
-            io.print("Exp Loss: "+ expChange);
+            io.print(menu.getLanguage().expLossPrompt()+ expChange);
         }
 
         if(currentPlayer.getLevel() != 5){
@@ -248,7 +248,10 @@ public class GameController{
 
     }
 
-    private void finishSession(Result sessionResult){
+    private void finishSession(Result sessionResult,int expChange){
+        printResults(sessionResult);
+        printExpChange(expChange);
+
         sessionResult.setPlayer(currentPlayer);
         currentPlayer.addResult(sessionResult);
         playerRepo.save(currentPlayer);

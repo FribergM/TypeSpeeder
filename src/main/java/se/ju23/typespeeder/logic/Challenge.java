@@ -53,101 +53,113 @@ public class Challenge{
         }
         return processResult(startTime,endTime,lettersToType,playerAttempt);
     }
-    //TODO Break into own methods + change Capitalization for difficulty
+
     public String lettersToType(IO io){
-        Set<Character> specialChar = Set.of('.',',','!','?','-','\'',' ','\n');
-        io.println("");
+        Set<Character> specialChars = Set.of('.',',','!','?','-','\'',' ','\n');
+        io.println();
         if(gameMode == 1){
-            String challengeSentence = "";
-            String[] sentences = challengeText.split("[.]");
-
-            int challengeSentenceIndex = (int) (Math.random() * sentences.length);
-
-            for(int i=0;i<sentences.length;i++){
-                sentences[i] += ".";
-                if(i== challengeSentenceIndex){
-                    io.printCyan(sentences[i]);
-                    challengeSentence = sentences[i];
-                }else{
-                    io.printRed(sentences[i]);
-                }
-            }
-            return challengeSentence.trim();
-        }
-        else if(gameMode == 2){
-            StringBuilder challengeBuilder = new StringBuilder();
-            String[] words = challengeText.split(" +");
-            double gameDiff = implementDifficulty(4);
-            Random random = new Random();
-
-            for(int i = 0; i < words.length; i++){
-                if(random.nextDouble() < 1 / gameDiff){
-                    char lastChar = words[i].charAt(words[i].length()-1);
-                    if(specialChar.contains(lastChar)){
-                        words[i] = words[i].substring(0, words[i].length()-1);
-                        io.printCyan(words[i]);
-                        io.printRed(lastChar+" ");
-                    }else{
-                        io.printCyan(words[i]+" ");
-                    }
-                    words[i] += " ";
-                    if(words[i].charAt(0) == '\n'){
-                        words[i] = words[i].substring(1);
-                    }
-                    challengeBuilder.append(words[i]);
-                }else{
-                    io.printRed(words[i] + " ");
-                }
-            }
-            return challengeBuilder.toString().trim();
-
+            return gameModeOneString(io);
+        }else if(gameMode == 2){
+            return gameModeTwoString(io,specialChars);
         }else if(gameMode == 3){
-            StringBuilder challengeBuilder = new StringBuilder();
-            char[] chars = challengeText.toCharArray();
-            double gameDiff = implementDifficulty(0);
-            Random random = new Random();
-
-            for(int i = 0; i < chars.length; i++){
-                String charStr = chars[i]+"";
-                if(random.nextDouble() < 1 / gameDiff){
-                    if(specialChar.contains(chars[i])){
-                        io.printRed(charStr);
-                    }else{
-                        io.printCyan(charStr);
-                        charStr +="";
-                        challengeBuilder.append(charStr);
-                    }
-                }else{
-                    charStr = chars[i]+"";
-                    io.printRed(charStr);
-                }
-            }
-            return challengeBuilder.toString().trim();
+            return gameModeThreeString(io,specialChars);
         }else if(gameMode == 4){
-            StringBuilder challengeBuilder = new StringBuilder();
-            char[] chars = challengeText.toCharArray();
-            double gameDiff = implementDifficulty(0);
-            Random random = new Random();
-
-            for (int i = 0; i < chars.length; i++){
-                String charStr = chars[i]+"";
-                if(random.nextDouble() < 1 / gameDiff){
-                    if(specialChar.contains(chars[i])){
-                        io.printRed(charStr);
-                    }else{
-                        chars[i] = getRandomSChar();
-                        charStr = chars[i]+"";
-                        io.printCyan(charStr);
-                        challengeBuilder.append(charStr);
-                    }
-                }else{
-                    io.printRed(charStr);
-                }
-            }
-            return challengeBuilder.toString().trim();
+            return gameModeFourString(io,specialChars);
         }
         throw new RuntimeException();
     }
+
+    private String gameModeOneString(IO io){
+        String challengeSentence = "";
+        String[] sentences = challengeText.split("[.]");
+
+        int challengeSentenceIndex = (int) (Math.random() * sentences.length);
+
+        for(int i=0;i<sentences.length;i++){
+            sentences[i] += ".";
+            if(i== challengeSentenceIndex){
+                io.printCyan(sentences[i]);
+                challengeSentence = sentences[i];
+            }else{
+                io.printRed(sentences[i]);
+            }
+        }
+        return challengeSentence.trim();
+    }
+    private String gameModeTwoString(IO io,Set<Character> specialChars){
+        StringBuilder challengeBuilder = new StringBuilder();
+        String[] words = challengeText.split(" +");
+        double gameDiff = implementDifficulty(4);
+        Random random = new Random();
+
+        for(int i = 0; i < words.length; i++){
+            if(random.nextDouble() < 1 / gameDiff){
+                char lastChar = words[i].charAt(words[i].length()-1);
+                if(specialChars.contains(lastChar)){
+                    words[i] = words[i].substring(0, words[i].length()-1);
+                    io.printCyan(words[i]);
+                    io.printRed(lastChar+" ");
+                }else{
+                    io.printCyan(words[i]+" ");
+                }
+                words[i] += " ";
+                if(words[i].charAt(0) == '\n'){
+                    words[i] = words[i].substring(1);
+                }
+                challengeBuilder.append(words[i]);
+            }else{
+                io.printRed(words[i] + " ");
+            }
+        }
+        return challengeBuilder.toString().trim();
+    }
+    private String gameModeThreeString(IO io,Set<Character> specialChars){
+        StringBuilder challengeBuilder = new StringBuilder();
+        char[] chars = challengeText.toCharArray();
+        double gameDiff = implementDifficulty(0);
+        Random random = new Random();
+
+        for(int i = 0; i < chars.length; i++){
+            String charStr = chars[i]+"";
+            if(random.nextDouble() < 1 / gameDiff){
+                if(specialChars.contains(chars[i])){
+                    io.printRed(charStr);
+                }else{
+                    io.printCyan(charStr);
+                    charStr +="";
+                    challengeBuilder.append(charStr);
+                }
+            }else{
+                charStr = chars[i]+"";
+                io.printRed(charStr);
+            }
+        }
+        return challengeBuilder.toString().trim();
+    }
+    private String gameModeFourString(IO io,Set<Character> specialChars){
+        StringBuilder challengeBuilder = new StringBuilder();
+        char[] chars = challengeText.toCharArray();
+        double gameDiff = implementDifficulty(0);
+        Random random = new Random();
+
+        for (int i = 0; i < chars.length; i++){
+            String charStr = chars[i]+"";
+            if(random.nextDouble() < 1 / gameDiff){
+                if(specialChars.contains(chars[i])){
+                    io.printRed(charStr);
+                }else{
+                    chars[i] = getRandomSChar();
+                    charStr = chars[i]+"";
+                    io.printCyan(charStr);
+                    challengeBuilder.append(charStr);
+                }
+            }else{
+                io.printRed(charStr);
+            }
+        }
+        return challengeBuilder.toString().trim();
+    }
+
     private double implementDifficulty(double adjustment){
         switch(difficulty){
             case 1 -> {return 12-adjustment;}
@@ -243,10 +255,16 @@ public class Challenge{
         return new Result(wpm, accuracy.getPercentage(), accuracy.getStreak(),overallScore);
     }
 
-    public int calculateExperience(Result result){
+    public int calculateExperience(Result result, int difficulty){
         int wpm = result.getWpm();
         double accuracy = result.getAccuracy();
-        int exp = wpm - 25;
+        int difficultyPenalty = 50;
+        switch(difficulty){
+            case 1 -> difficultyPenalty = 10;
+            case 2 -> difficultyPenalty = 25;
+            case 3 -> difficultyPenalty = 40;
+        }
+        int exp = wpm - difficultyPenalty;
 
         if(accuracy == 1.0){
             exp += 40;

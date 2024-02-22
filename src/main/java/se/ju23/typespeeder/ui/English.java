@@ -50,6 +50,142 @@ public class English implements Language{
     }
 
     @Override
+    public String getAccountSettings(){
+        return "Account Settings!\n" +
+                "1. Change username.\n" +
+                "2. Change password.\n" +
+                "3. Change alias.\n" +
+                "0. Go back";
+    }
+
+    @Override
+    public String getLeaderboardOptions(){
+        return "Performance Center!\n" +
+                "1. View global leaderboards.\n" +
+                "2. View your personal leaderboards.\n" +
+                "3. View your recent results.\n" +
+                "0. Go back";
+    }
+
+    @Override
+    public String getGlobalLBOptions(){
+        return "Global Leaderboards!\n" +
+                "1. WPM leaderboard.\n" +
+                "2. Average-accuracy leaderboard.\n" +
+                "3. Streak leaderboard.\n" +
+                "4. Score leaderboard.\n" +
+                "0. Go back";
+    }
+
+    @Override
+    public String getPersonalLBOptions(){
+        return "Personal Leaderboards!\n" +
+                "1. WPM leaderboard.\n" +
+                "2. Accuracy leaderboard.\n" +
+                "3. Streak leaderboard.\n" +
+                "4. Score leaderboard.\n" +
+                "0. Go back";
+    }
+
+    @Override
+    public String gameInstruction(){
+        return "The game is about entering the characters that show up in \033[36mblue\033[0m!"+
+                "\nIn game mode 1/2, you also need to add spaces between each word." +
+                "\nIn game mode 3/4, you just write the characters without any spaces."+
+                "\nDon't forget capital letters when needed!\nGood luck!";
+    }
+
+    @Override
+    public String recentResultsPrompt(){
+        return "Recent results:";
+    }
+
+    @Override
+    public String noResultsPrompt(){
+        return "You have no recorded results.";
+    }
+
+    @Override
+    public String personalWpmPrompt(){
+        return "Personal WPM Leaderboard:";
+    }
+
+    @Override
+    public String personalAccPrompt(){
+        return "Personal Accuracy Leaderboard:";
+    }
+
+    @Override
+    public String personalStreakPrompt(){
+        return "Personal Streak Leaderboard:";
+    }
+
+    @Override
+    public String personalScorePrompt(){
+        return "Personal Score Leaderboard:";
+    }
+
+    @Override
+    public String globalWpmPrompt(){
+        return "Global WPM Leaderboard";
+    }
+
+    @Override
+    public String globalAccPrompt(){
+        return "Global Avg.Accuracy Leaderboard:";
+    }
+
+    @Override
+    public String globalStreakPrompt(){
+        return "Global Streak Leaderboard:";
+    }
+
+    @Override
+    public String globalScorePrompt(){
+        return "Global Score Leaderboard:";
+    }
+
+    @Override
+    public String countdownPrompt(){
+        return "Game is starting in: ";
+    }
+
+    @Override
+    public String resultPrompt(){
+        return "RESULT:";
+    }
+
+    @Override
+    public String enterKeyPrompt(){
+        return "[Enter]";
+    }
+
+    @Override
+    public String expGainPrompt(){
+        return "Exp Gain: ";
+    }
+
+    @Override
+    public String expLossPrompt(){
+        return "Exp Loss: ";
+    }
+
+    @Override
+    public String levelUpPrompt(){
+        return "You leveled up to : ";
+    }
+
+    @Override
+    public String cantLeaveEmptyPrompt(){
+        return "Fine. I'm not forcing you to play...";
+    }
+
+    @Override
+    public String logoutPrompt(){
+        return "Logging out...";
+    }
+
+    @Override
     public String languageSelectedPrompt(){
         return "English selected.";
     }

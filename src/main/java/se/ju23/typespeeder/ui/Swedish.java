@@ -50,6 +50,142 @@ public class Swedish implements Language{
     }
 
     @Override
+    public String getAccountSettings(){
+        return "Kontoinställningar!\n" +
+                "1. Byt användarnamn.\n" +
+                "2. Byt lösenord.\n" +
+                "3. Byt alias.\n" +
+                "0. Återvänd.";
+    }
+
+    @Override
+    public String getLeaderboardOptions(){
+        return "Prestanda centret!\n" +
+                "1. Se globala topplistor.\n" +
+                "2. Se dina personliga topplistor.\n" +
+                "3. Se dina senaste resultat.\n" +
+                "0. Återvänd.";
+    }
+
+    @Override
+    public String getGlobalLBOptions(){
+        return "Globala Topplistor!\n" +
+                "1. WPM topplista.\n" +
+                "2. Precisions topplista.\n" +
+                "3. Flest-i-rad topplista.\n" +
+                "4. Poäng topplista.\n" +
+                "0. Återvänd.";
+    }
+
+    @Override
+    public String getPersonalLBOptions(){
+        return "Personliga Topplistor!\n" +
+                "1. WPM-topplista.\n" +
+                "2. Precisions-topplista.\n" +
+                "3. Flest-i-rad-topplista.\n" +
+                "4. Poäng-topplista.\n" +
+                "0. Återvänd.";
+    }
+
+    @Override
+    public String gameInstruction(){
+        return "Spelet går ut på att skriva alla tecken som visas i \033[36mblått\033[0m!"+
+                "\nI spelläge 1/2 så måste du även tillägga mellanslag mellan orden."+
+                "\nI spelläge 3/4 så behöver du enbart skriva tecken utan mellanslag."+
+                "\nGlöm inte stor bokstav när det behövs!\nLycka till!";
+    }
+
+    @Override
+    public String recentResultsPrompt(){
+        return "Senaste Resultat:";
+    }
+
+    @Override
+    public String noResultsPrompt(){
+        return "Du har inga resultat ännu.";
+    }
+
+    @Override
+    public String personalWpmPrompt(){
+        return "Personlig WPM-Topplista:";
+    }
+
+    @Override
+    public String personalAccPrompt(){
+        return "Personlig Precisions-Topplista:";
+    }
+
+    @Override
+    public String personalStreakPrompt(){
+        return "Personlig Flest-I-Rad-Topplista:";
+    }
+
+    @Override
+    public String personalScorePrompt(){
+        return "Personlig Score-Topplista";
+    }
+
+    @Override
+    public String globalWpmPrompt(){
+        return "Global WPM-Topplista:";
+    }
+
+    @Override
+    public String globalAccPrompt(){
+        return "Global Precisions-Topplista:";
+    }
+
+    @Override
+    public String globalStreakPrompt(){
+        return "Global Flest-I-Rad-Topplista:";
+    }
+
+    @Override
+    public String globalScorePrompt(){
+        return "Global Score-Topplista";
+    }
+
+    @Override
+    public String countdownPrompt(){
+        return "Spelet startar om: ";
+    }
+
+    @Override
+    public String resultPrompt(){
+        return "RESULTAT:";
+    }
+
+    @Override
+    public String enterKeyPrompt(){
+        return "[Blanksteg]";
+    }
+
+    @Override
+    public String expGainPrompt(){
+        return "Exp ökning: ";
+    }
+
+    @Override
+    public String expLossPrompt(){
+        return "Exp minskning: ";
+    }
+
+    @Override
+    public String levelUpPrompt(){
+        return "Du nådde nivå: ";
+    }
+
+    @Override
+    public String cantLeaveEmptyPrompt(){
+        return "Okej. Jag tvingar dig inte att spela...";
+    }
+
+    @Override
+    public String logoutPrompt(){
+        return "Loggar ut...";
+    }
+
+    @Override
     public String languageSelectedPrompt(){
         return "Svenska valt.";
     }
