@@ -26,12 +26,12 @@ public class Menu implements MenuService{
 
     @Override
     public void displayGameModes(){
-        io.output(language.getGameModeOptions());
+        io.println(language.getGameModeOptions());
     }
 
     @Override
     public void displayDifficulties(){
-        io.output(language.getDifficultyOptions());
+        io.println(language.getDifficultyOptions());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Menu implements MenuService{
 
     @Override
     public void chooseLanguage(){
-        io.output("Välj språk (svenska/engelska):\nSelect language (swedish/english):");
+        io.println("Välj språk (svenska/engelska):\nSelect language (swedish/english):");
         String langChoice = io.input();
         langChoice = langChoice.toLowerCase();
 
@@ -60,14 +60,14 @@ public class Menu implements MenuService{
         switch(langChoice){
             case "swedish","svenska" -> {
                 this.language = new Swedish();
-                io.output(language.languageSelectedPrompt());
+                io.println(language.languageSelectedPrompt());
             }
             case "english","engelska" -> {
                 this.language = new English();
-                io.output(language.languageSelectedPrompt());
+                io.println(language.languageSelectedPrompt());
             }
             default -> {
-                io.output("Invalid input. Default language provided.");
+                io.println("Invalid input. Default language provided.");
                 this.language = new English();
             }
         }
@@ -80,7 +80,7 @@ public class Menu implements MenuService{
 
         do{
             String languagePrompt = language.changeLanguagePrompt();
-            io.output(languagePrompt);
+            io.println(languagePrompt);
 
             String choice = io.input();
 
@@ -94,10 +94,10 @@ public class Menu implements MenuService{
                     continueLoop = false;
                 }
                 case "2" -> continueLoop = false;
-                default -> io.output(language.menuErrorPrompt());
+                default -> io.println(language.menuErrorPrompt());
             }
 
-            io.output(language.languageSelectedPrompt());
+            io.println(language.languageSelectedPrompt());
 
         }while(continueLoop);
     }

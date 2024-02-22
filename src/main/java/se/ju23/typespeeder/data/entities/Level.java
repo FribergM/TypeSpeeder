@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.data;
+package se.ju23.typespeeder.data.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,26 +6,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 
 import java.util.Map;
 
 @Entity
 public class Level{
     private static final int DEFAULT_LEVEL = 1;
-    private static final int DEFAULT_EXP_REQ = 100;
     private static final Map<Integer, Integer> EXP_REQUIREMENTS = Map.of(
-            1,150,
-            2,200,
-            3,300,
-            4,0);
+            1,400,
+            2,1000,
+            3,2500,
+            4,5000);
 
     @Id
     @Column(name = "playerId")
     private int id;
     private int level;
     private int exp;
-    @Transient
     private int expReq;
     @OneToOne
     @MapsId
@@ -34,7 +31,7 @@ public class Level{
 
     public Level(){
         level = DEFAULT_LEVEL;
-        expReq = DEFAULT_EXP_REQ;
+        expReq = EXP_REQUIREMENTS.getOrDefault(level,0);
     }
 
     public boolean gainExp(int expGain){
@@ -43,15 +40,14 @@ public class Level{
     }
 
     public void loseExp(int expLoss){
-        exp = Math.max(0, (exp - expLoss));
+        exp = Math.max(0, (exp + expLoss));
     }
 
     private boolean updateLevel(){
-        int nextLevel = level + 1;
-        if(exp <= EXP_REQUIREMENTS.getOrDefault(nextLevel,Integer.MAX_VALUE)){
-            level = nextLevel;
-            exp = 0;
-            expReq = EXP_REQUIREMENTS.getOrDefault(nextLevel,0);
+        if(exp >= expReq){
+            level++;
+            exp -= expReq;
+            expReq = EXP_REQUIREMENTS.getOrDefault(level,0);
             return true;
         }
         return false;
@@ -60,15 +56,12 @@ public class Level{
     public int getLevel(){
         return level;
     }
-
     public int getExp(){
         return exp;
     }
-
     public int getExpReq(){
         return expReq;
     }
-
     public void setPlayer(Player player){
         this.player = player;
     }

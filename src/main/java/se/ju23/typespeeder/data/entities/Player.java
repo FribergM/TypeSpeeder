@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.data;
+package se.ju23.typespeeder.data.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -62,6 +62,9 @@ public class Player{
         this.alias = alias;
     }
 
+    public int getId(){
+        return id;
+    }
     public String getUsername(){
         return username;
     }

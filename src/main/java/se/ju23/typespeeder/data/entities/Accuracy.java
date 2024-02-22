@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.data;
+package se.ju23.typespeeder.data.entities;
 
 public class Accuracy{
     private double percentage;

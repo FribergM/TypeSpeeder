@@ -1,14 +1,12 @@
 package se.ju23.typespeeder.logic;
 
-import se.ju23.typespeeder.data.Accuracy;
-import se.ju23.typespeeder.data.Result;
-import se.ju23.typespeeder.data.Text;
+import se.ju23.typespeeder.data.entities.Accuracy;
+import se.ju23.typespeeder.data.entities.Result;
+import se.ju23.typespeeder.data.entities.Text;
 import se.ju23.typespeeder.io.IO;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -55,10 +53,10 @@ public class Challenge{
         }
         return processResult(startTime,endTime,lettersToType,playerAttempt);
     }
-
+    //TODO Break into own methods + change Capitalization for difficulty
     public String lettersToType(IO io){
         Set<Character> specialChar = Set.of('.',',','!','?','-','\'',' ','\n');
-        io.output("");
+        io.println("");
         if(gameMode == 1){
             String challengeSentence = "";
             String[] sentences = challengeText.split("[.]");
@@ -177,7 +175,7 @@ public class Challenge{
 
         int wpm = wpmCalculator(numberOfWords(lettersToType),timeInMinutes, accuracy);
 
-        return new Result(wpm, accuracy.getPercentage(), accuracy.getStreak());
+        return generateOverallScore(wpm, accuracy);
     }
     private Accuracy accuracyCalculator(String lettersToType, String playerAttempt){
         if(lettersToType.contains(" ")){
@@ -233,11 +231,32 @@ public class Challenge{
     }
     private int numberOfWords(String lettersToType){
         if(lettersToType.contains(" ")){
-            System.out.println(lettersToType.split(" ").length);
             return lettersToType.split(" ").length;
         }else{
-            System.out.println(lettersToType.length()/5);
             return lettersToType.length()/4;
         }
+    }
+
+    private Result generateOverallScore(int wpm, Accuracy accuracy){
+        double overallScore = wpm * (1 + accuracy.getPercentage()) + (accuracy.getStreak()/2.0);
+        overallScore = Math.round(overallScore*100.0)/100.0;
+        return new Result(wpm, accuracy.getPercentage(), accuracy.getStreak(),overallScore);
+    }
+
+    public int calculateExperience(Result result){
+        int wpm = result.getWpm();
+        double accuracy = result.getAccuracy();
+        int exp = wpm - 50;
+
+        if(accuracy == 1.0){
+            exp += 40;
+        }else if(accuracy > 0.9){
+            exp += 30;
+        }else if(accuracy > 0.8){
+            exp += 10;
+        }else if(accuracy > 0.7){
+            exp += 5;
+        }
+        return exp;
     }
 }

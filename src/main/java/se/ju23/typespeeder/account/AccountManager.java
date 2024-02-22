@@ -1,7 +1,7 @@
 package se.ju23.typespeeder.account;
 
-import se.ju23.typespeeder.data.Player;
-import se.ju23.typespeeder.data.PlayerRepository;
+import se.ju23.typespeeder.data.entities.Player;
+import se.ju23.typespeeder.data.repositories.PlayerRepository;
 import se.ju23.typespeeder.io.IO;
 import se.ju23.typespeeder.io.MenuService;
 
@@ -15,58 +15,61 @@ public class AccountManager{
 
     public AccountManager(PlayerRepository playerRepo,
                           IO io,
-                          MenuService menu,
-                          Player currentPlayer){
+                          MenuService menu){
         this.playerRepo = playerRepo;
         this.io = io;
         this.menu = menu;
-        this.currentPlayer = currentPlayer;
     }
 
-    public boolean login(){
-        io.output(menu.getLanguage().enterUsernamePrompt());
+    public LoginStatus login(){
+
+        io.println(menu.getLanguage().enterUsernamePrompt());
         String username = io.input();
         if(username.equals("0")){
-            return false;
+            return new LoginStatus();
         }
-        io.output(menu.getLanguage().enterPasswordPrompt());
+        io.println(menu.getLanguage().enterPasswordPrompt());
         String password = io.input();
         if(password.equals("0")){
-            return false;
+            return new LoginStatus();
         }
         currentPlayer = playerRepo.findByUsernameAndPassword(username,password);
 
         if(currentPlayer == null){
-            io.output(menu.getLanguage().loginErrorPrompt());
-            return false;
+            io.println(menu.getLanguage().loginErrorPrompt());
+            return new LoginStatus();
         }else if(currentPlayer.getUsername().equalsIgnoreCase(username) && currentPlayer.getPassword().equals(password)){
-            return true;
+            boolean loginStatus = true;
+            return new LoginStatus(currentPlayer,loginStatus);
         }else{
             currentPlayer = null;
-            io.output(menu.getLanguage().loginErrorPrompt());
-            return false;
+            io.println(menu.getLanguage().loginErrorPrompt());
+            return new LoginStatus();
         }
 
     }
 
-    public boolean createAccount(){
+    public LoginStatus createAccount(){
         String username = getUsernameInput();
         if(username.equals("0")){
-            return false;
+            return new LoginStatus();
         }
         String password = getPasswordInput();
         if(password.equals("0")){
-            return false;
+            return new LoginStatus();
         }
         String alias = getAliasInput();
         if(alias.equals("0")){
-            return false;
+            return new LoginStatus();
         }
 
         currentPlayer = new Player(username,password,alias);
         playerRepo.save(currentPlayer);
+        currentPlayer = playerRepo.findByUsernameAndPassword(username,password);
+        boolean loginStatus = true;
 
-        return true;
+
+        return new LoginStatus(currentPlayer,loginStatus);
     }
 
 
@@ -75,7 +78,7 @@ public class AccountManager{
         boolean validName;
         String username;
         do{
-            io.output(menu.getLanguage().updateUsernamePrompt());
+            io.println(menu.getLanguage().updateUsernamePrompt());
             username = io.input();
 
             if(username.equals("0")){
@@ -93,13 +96,13 @@ public class AccountManager{
 
         for(Player p : playerList){
             if(p.getUsername().equalsIgnoreCase(username)){
-                io.output(menu.getLanguage().uNameTakenPrompt());
+                io.println(menu.getLanguage().uNameTakenPrompt());
                 return false;
             }
         }
 
-        if(!username.matches("^[a-zA-Z]{4,15}$")){
-            io.output(menu.getLanguage().invalidUsernamePrompt());
+        if(!username.matches("^[a-zA-Z0-9]{4,15}$")){
+            io.println(menu.getLanguage().invalidUsernamePrompt());
             return false;
         }
         return true;
@@ -109,7 +112,7 @@ public class AccountManager{
         boolean validPassword;
         String password;
         do{
-            io.output(menu.getLanguage().updatePasswordPrompt());
+            io.println(menu.getLanguage().updatePasswordPrompt());
             password = io.input();
 
             if(password.equals("0")){
@@ -124,7 +127,7 @@ public class AccountManager{
 
     private boolean validatePassword(String password){
         if(!password.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{4,20}$")){
-            io.output(menu.getLanguage().invalidPasswordPrompt());
+            io.println(menu.getLanguage().invalidPasswordPrompt());
             return false;
         }
         return true;
@@ -134,7 +137,7 @@ public class AccountManager{
         boolean validAlias;
         String alias;
         do{
-            io.output(menu.getLanguage().updateAliasPrompt());
+            io.println(menu.getLanguage().updateAliasPrompt());
             alias = io.input();
 
             if(alias.equals("0")){
@@ -149,7 +152,7 @@ public class AccountManager{
 
     private boolean validateAlias(String alias){
         if(!alias.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{1,15}$")){
-            io.output(menu.getLanguage().invalidAliasPrompt());
+            io.println(menu.getLanguage().invalidAliasPrompt());
             return false;
         }
         return true;

@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.data;
+package se.ju23.typespeeder.data.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

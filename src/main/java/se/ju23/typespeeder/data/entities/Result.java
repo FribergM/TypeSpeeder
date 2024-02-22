@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.data;
+package se.ju23.typespeeder.data.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,14 +15,16 @@ public class Result{
     private int wpm;
     private double accuracy;
     private int streak;
+    private double score;
 
     @ManyToOne
     private Player player;
 
-    public Result(int wpm, double accuracy, int streak){
+    public Result(int wpm, double accuracy, int streak, double score){
         this.wpm = wpm;
         this.accuracy = accuracy;
         this.streak = streak;
+        this.score = score;
 
     }
     public Result(){
@@ -37,14 +39,15 @@ public class Result{
     public String toString(){
         return "WPM: " + wpm +
                 "\nACCURACY: " + accuracy*100+"%"+
-                "\nSTREAK: " + streak;
+                "\nSTREAK: " + streak+
+                "\nSCORE: "+ score;
+    }
 
+    public int getWpm(){
+        return wpm;
+    }
 
-//                "Result{" +
-//                "id=" + id +
-//                ", wpm=" + wpm +
-//                ", accuracy=" + accuracy +
-//                ", streak=" + streak +
-//                '}';
+    public double getAccuracy(){
+        return accuracy;
     }
 }

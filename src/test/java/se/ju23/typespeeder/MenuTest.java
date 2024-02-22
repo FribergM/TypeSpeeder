@@ -19,7 +19,6 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuTest {
-    //TODO Check with Oskar if its ok to change Class package name + add necessary components.
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 

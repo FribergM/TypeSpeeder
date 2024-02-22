@@ -7,7 +7,7 @@ public interface IO{
     String RED = "\033[31m";
     String RESET = "\033[0m";
     String input();
-    void output(String s);
+    void println(String s);
     void print(String s);
     void printRed(String s);
     void printCyan(String s);

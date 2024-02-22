@@ -17,13 +17,13 @@ public class SystemIO implements IO{
     }
 
     @Override
-    public void output(String s){
+    public void println(String s){
         System.out.println("\n"+s);
     }
 
     @Override
     public void print(String s){
-        System.out.print(RESET +s);
+        System.out.print(RESET+"\n"+s);
     }
 
     @Override
