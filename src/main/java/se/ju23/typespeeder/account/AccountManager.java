@@ -2,8 +2,8 @@ package se.ju23.typespeeder.account;
 
 import se.ju23.typespeeder.data.entities.Player;
 import se.ju23.typespeeder.data.repositories.PlayerRepository;
-import se.ju23.typespeeder.io.IO;
-import se.ju23.typespeeder.io.MenuService;
+import se.ju23.typespeeder.ui.IO;
+import se.ju23.typespeeder.ui.MenuService;
 
 import java.util.List;
 
@@ -72,7 +72,33 @@ public class AccountManager{
         return new LoginStatus(currentPlayer,loginStatus);
     }
 
-
+    public Player changeUsername(Player player){
+        String username = getUsernameInput();
+        if(username.equals("0")){
+            return player;
+        }
+        player.setUsername(username);
+        playerRepo.save(player);
+        return player;
+    }
+    public Player changePassword(Player player){
+        String password = getPasswordInput();
+        if(password.equals("0")){
+            return player;
+        }
+        player.setPassword(password);
+        playerRepo.save(player);
+        return player;
+    }
+    public Player changeAlias(Player player){
+        String alias = getAliasInput();
+        if(alias.equals("0")){
+            return player;
+        }
+        player.setAlias(alias);
+        playerRepo.save(player);
+        return player;
+    }
 
     private String getUsernameInput(){
         boolean validName;
@@ -101,7 +127,7 @@ public class AccountManager{
             }
         }
 
-        if(!username.matches("^[a-zA-Z0-9]{4,15}$")){
+        if(!username.matches("^[a-zA-Z0-9]{4,16}$")){
             io.println(menu.getLanguage().invalidUsernamePrompt());
             return false;
         }
@@ -151,7 +177,7 @@ public class AccountManager{
     }
 
     private boolean validateAlias(String alias){
-        if(!alias.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{1,15}$")){
+        if(!alias.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{1,16}$")){
             io.println(menu.getLanguage().invalidAliasPrompt());
             return false;
         }

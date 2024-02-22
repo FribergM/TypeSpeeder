@@ -17,32 +17,66 @@ public class LeaderboardService{
     @Autowired
     AccLeaderboardRepository accLeaderboardRepo;
 
-    public void streak(){
+    public String streak(){
         List<Leaderboard> streakLb = leaderboardRepo.findStreakLeaderboard();
+        StringBuilder builder = new StringBuilder();
+        int length = streakLb.get(0).streakToString().length();
 
-        for(Leaderboard l : streakLb){
-            System.out.println(l);
+        builder.append("\n").append(Util.getFrameByLength(length));
+        for(int i=0;i< streakLb.size();i++){
+            builder.append(String.format("\n| %-3s",(i+1)+"."));
+            builder.append(streakLb.get(i).streakToString());
         }
+        builder.append("\n").append(Util.getFrameByLength(length));
+
+        return builder.toString().trim();
     }
-    public void wpm(){
+
+    public String wpm(){
         List<Leaderboard> wpmLb = leaderboardRepo.findWpmLeaderboard();
+        StringBuilder builder = new StringBuilder();
 
-        for(Leaderboard l : wpmLb){
-            System.out.println(l);
+        int length = wpmLb.get(0).wpmToString().length();
+
+        builder.append("\n").append(Util.getFrameByLength(length));
+        for(int i=0;i<wpmLb.size();i++){
+            builder.append(String.format("\n| %-3s",(i+1)+"."));
+            builder.append(wpmLb.get(i).wpmToString());
         }
+        builder.append("\n").append(Util.getFrameByLength(length));
+
+        return builder.toString().trim();
     }
-    public void score(){
+
+    public String score(){
         List<Leaderboard> scoreLb = leaderboardRepo.findScoreLeaderboard();
+        StringBuilder builder = new StringBuilder();
 
-        for(Leaderboard l : scoreLb){
-            System.out.println(l);
+        int length = scoreLb.get(0).scoreToString().length();
+
+        builder.append("\n").append(Util.getFrameByLength(length));
+        for(int i=0;i< scoreLb.size();i++){
+            builder.append(String.format("\n| %-3s",(i+1)+"."));
+            builder.append(scoreLb.get(i).scoreToString());
         }
+        builder.append("\n").append(Util.getFrameByLength(length));
+
+        return builder.toString().trim();
     }
-    public void accuracy(){
-        List<AccuracyLeaderboard> accLb = accLeaderboardRepo.findAvgAccuracyLeaderboard();
 
-        for(AccuracyLeaderboard l : accLb){
-            System.out.println(l);
+    public String accuracy(){
+        List<AccuracyLeaderboard> accLb = accLeaderboardRepo.findAvgAccuracyLeaderboard();
+        StringBuilder builder = new StringBuilder();
+
+        int length = accLb.get(0).accuracyToString().length();
+
+        builder.append("\n").append(Util.getFrameByLength(length));
+        for(int i=0;i< accLb.size();i++){
+            builder.append(String.format("\n| %-3s",(i+1)+"."));
+            builder.append(accLb.get(i).accuracyToString());
         }
+        builder.append("\n").append(Util.getFrameByLength(length));
+
+        return builder.toString().trim();
     }
 }

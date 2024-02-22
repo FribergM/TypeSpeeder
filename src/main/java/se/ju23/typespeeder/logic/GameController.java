@@ -7,8 +7,10 @@ import se.ju23.typespeeder.data.repositories.PlayerRepository;
 import se.ju23.typespeeder.data.entities.Result;
 import se.ju23.typespeeder.data.entities.Text;
 import se.ju23.typespeeder.data.repositories.TextRepository;
-import se.ju23.typespeeder.io.IO;
-import se.ju23.typespeeder.io.MenuService;
+import se.ju23.typespeeder.data.services.LeaderboardService;
+import se.ju23.typespeeder.ui.IO;
+import se.ju23.typespeeder.ui.LeaderboardMenu;
+import se.ju23.typespeeder.ui.MenuService;
 
 import java.util.List;
 
@@ -19,18 +21,21 @@ public class GameController{
     private PlayerRepository playerRepo;
     private TextRepository textRepo;
     private AccountManager accountManager;
+    private LeaderboardService lbService;
     private Player currentPlayer;
 
     public GameController(IO io,
                           MenuService menu,
                           PlayerRepository playerRepo,
                           TextRepository textRepo,
-                          AccountManager accountManager){
+                          AccountManager accountManager,
+                          LeaderboardService lbService){
         this.io = io;
         this.menu = menu;
         this.playerRepo = playerRepo;
         this.textRepo = textRepo;
         this.accountManager = accountManager;
+        this.lbService = lbService;
     }
 
     public void run(){
@@ -80,8 +85,8 @@ public class GameController{
                 case "1" -> gameModeSelection(true);
                 case "2" -> gameModeSelection(false);
                 //TODO Fix this & Add lang prompts
-                case "3" -> io.println("Show res");
-                case "4" -> io.println("Acc settings");
+                case "3" -> leaderboardSelection();
+//                case "4" -> accountSettingSelection();
                 case "0" -> io.println("Logging out...");
                 default -> io.println(menu.getLanguage().menuErrorPrompt());
             }
@@ -113,7 +118,7 @@ public class GameController{
                     difficultySelection(language,4);
                     return;
                 }
-                case "0" -> {}//TODO RETURN TO MENU lang prompts
+                case "0" -> {}
                 default -> io.println(menu.getLanguage().menuErrorPrompt());
             }
         }while(!playerChoice.equals("0"));
@@ -139,14 +144,56 @@ public class GameController{
                     play(language,gameMode,3);
                     return;
                 }
-                case "0" -> {}//TODO RETURN TO MENU lang prompts
+                case "0" -> {}
                 default -> io.println(menu.getLanguage().menuErrorPrompt());
             }
         }while(!playerChoice.equals("0"));
     }
+
+    public void accountSettingSelection(){
+        String playerChoice;
+        do{
+            //TODO Lang prompt
+//            menu.displayAccountSettings();
+
+            playerChoice = io.input();
+
+            switch(playerChoice){
+                case "1" -> accountManager.changeUsername(currentPlayer);
+                case "2" -> accountManager.changePassword(currentPlayer);
+                case "3" -> accountManager.changeAlias(currentPlayer);
+                case "0" -> {}
+                default -> io.println(menu.getLanguage().menuErrorPrompt());
+            }
+        }while(!playerChoice.equals("0"));
+    }
+
+    public void leaderboardSelection(){
+        LeaderboardMenu leaderboardMenu = new LeaderboardMenu(currentPlayer,io,menu,lbService);
+        String playerChoice;
+        do{
+            //TODO Lang prompt
+//            menu.displayLeaderboardOptions();
+            io.println("1. GlobalLB");
+            io.println("2. PersonalLB");
+            io.println("3. RecentGames");
+
+            playerChoice = io.input();
+
+            switch(playerChoice){
+                case "1" -> leaderboardMenu.global();
+                case "2" -> leaderboardMenu.personal();
+                case "3" -> leaderboardMenu.printRecentResults();
+                case "0" -> {}
+                default -> io.println(menu.getLanguage().menuErrorPrompt());
+            }
+        }while(!playerChoice.equals("0"));
+    }
+
     private void play(Boolean yesNo, int gameMode, int difficulty){
         List<Text> texts = textRepo.findAll();
         Challenge challenge = new Challenge(yesNo,gameMode,difficulty,texts);
+        //TODO remove this comment
 //        countdown();
         String lettersToType = challenge.lettersToType(io);
         //Comment this out when you don't want to cheat.

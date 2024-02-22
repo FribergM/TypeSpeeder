@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.io;
+package se.ju23.typespeeder.ui;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +9,16 @@ public class SystemIO implements IO{
 
     @Override
     public String input(){
+        if(scanner == null){
+            scanner = new Scanner(System.in);
+        }
+        System.out.print("> ");
+        return scanner.nextLine();
+    }
+
+    @Override
+    public String input(String s){
+        println(s);
         if(scanner == null){
             scanner = new Scanner(System.in);
         }

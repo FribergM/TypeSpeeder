@@ -37,17 +37,23 @@ public class Result{
 
     @Override
     public String toString(){
-        return "WPM: " + wpm +
-                "\nACCURACY: " + accuracy*100+"%"+
-                "\nSTREAK: " + streak+
-                "\nSCORE: "+ score;
+        double accuracyAsPercentage = accuracy*100;
+        int accPercentInt = (int) accuracyAsPercentage;
+        String accPercent = accPercentInt+"%";
+        return String.format("| %-5s%-3d | %-10s%-4s | %-8s%-2d | %-7s%-5.1f |",
+                "WPM: ",wpm,"ACCURACY: ",accPercent,"STREAK: ",streak,"SCORE: ",score);
     }
 
     public int getWpm(){
         return wpm;
     }
-
     public double getAccuracy(){
         return accuracy;
+    }
+    public int getStreak(){
+        return streak;
+    }
+    public double getScore(){
+        return score;
     }
 }

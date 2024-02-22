@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import org.hibernate.annotations.Immutable;
+import se.ju23.typespeeder.data.services.Util;
 
 @Entity
 @Immutable
@@ -45,12 +46,26 @@ public class Leaderboard{
 
     @Override
     public String toString(){
-        return "Leaderboard{" +
-                "alias='" + alias + '\'' +
-                ", wpm=" + wpm +
-                ", accuracy=" + accuracy +
-                ", streak=" + streak +
-                ", score=" + score +
-                '}';
+        double accuracyAsPercentage = accuracy*100;
+        int accPercentInt = (int) accuracyAsPercentage;
+        String accPercent = accPercentInt+"%";
+        return String.format("| %-16s | %-5s%-3d | %-10s%-4s | %-8s%-2d | %-7s%-5.1f |",
+                Util.centerText(alias,16),"WPM: ",wpm,"ACCURACY: ",accPercent,"STREAK: ",streak,"SCORE: ",score);
+    }
+    public String wpmToString(){
+        return String.format("| %-16s | %-5s%-3d |",
+                Util.centerText(alias,16),"WPM: ",wpm);
+    }
+
+    public String streakToString(){
+        return String.format("| %-16s | %-5s%-3d |",
+                Util.centerText(alias,16),"STREAK: ",streak);
+    }
+    public String scoreToString(){
+        double accuracyAsPercentage = accuracy*100;
+        int accPercentInt = (int) accuracyAsPercentage;
+        String accPercent = accPercentInt+"%";
+        return String.format("| %-16s | %-7s%-5.1f | %-5s%-3d | %-10s%-4s | %-8s%-2d |",
+                Util.centerText(alias,16),"SCORE: ",score,"WPM: ",wpm,"ACCURACY: ",accPercent,"STREAK: ",streak);
     }
 }

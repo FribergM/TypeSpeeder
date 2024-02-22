@@ -8,8 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import se.ju23.typespeeder.data.services.Util;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -96,5 +98,63 @@ public class Player{
                 ", alias='" + alias + '\'' +
                 ", resultList=" + resultList +
                 '}';
+    }
+    public String lastTenResults(){
+        List<Result> results = new ArrayList<>();
+        int lastIndex = resultList.size()-1;
+        for(int i=0;i<Math.min(10,resultList.size());i++){
+            results.add(resultList.get(lastIndex-i));
+        }
+        return generateSortedLeaderboardString(results, false);
+    }
+    public String resultsByWpm(){
+        List<Result> results = new ArrayList<>(resultList);
+        results.sort(Comparator.comparingInt(Result::getWpm).reversed());
+
+        return generateSortedLeaderboardString(results, true);
+    }
+    public String resultsByAccuracy(){
+        List<Result> results = new ArrayList<>(resultList);
+        results.sort(Comparator.comparingDouble(Result::getAccuracy).reversed());
+
+        return generateSortedLeaderboardString(results, true);
+    }
+    public String resultsByStreak(){
+        List<Result> results = new ArrayList<>(resultList);
+        results.sort(Comparator.comparingInt(Result::getStreak).reversed());
+
+        return generateSortedLeaderboardString(results, true);
+    }
+    public String resultsByScore(){
+        List<Result> results = new ArrayList<>(resultList);
+        results.sort(Comparator.comparingDouble(Result::getScore).reversed());
+
+        return generateSortedLeaderboardString(results, true);
+    }
+    private String generateSortedLeaderboardString(List<Result> results, boolean indexed){
+        StringBuilder builder = new StringBuilder();
+
+        if (!results.isEmpty()) {
+            int length = results.get(0).toString().length();
+
+            if(!indexed){
+                length-=5;
+            }
+
+            builder.append("\n").append(Util.getFrameByLength(length));
+            for(int i=0;i<Math.min(10,results.size());i++){
+                if(indexed){
+                    builder.append(String.format("\n| %3s",(i+1)+"."));
+                    builder.append(results.get(i));
+                }else{
+                    builder.append("\n").append(results.get(i));
+                }
+
+            }
+
+            builder.append("\n").append(Util.getFrameByLength(length));
+        }
+
+        return builder.toString().trim();
     }
 }

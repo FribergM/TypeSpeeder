@@ -1,4 +1,4 @@
-package se.ju23.typespeeder.io;
+package se.ju23.typespeeder.ui;
 
 import java.util.ArrayList;
 import java.util.List;

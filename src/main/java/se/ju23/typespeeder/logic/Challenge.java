@@ -3,7 +3,7 @@ package se.ju23.typespeeder.logic;
 import se.ju23.typespeeder.data.entities.Accuracy;
 import se.ju23.typespeeder.data.entities.Result;
 import se.ju23.typespeeder.data.entities.Text;
-import se.ju23.typespeeder.io.IO;
+import se.ju23.typespeeder.ui.IO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,7 +246,7 @@ public class Challenge{
     public int calculateExperience(Result result){
         int wpm = result.getWpm();
         double accuracy = result.getAccuracy();
-        int exp = wpm - 50;
+        int exp = wpm - 25;
 
         if(accuracy == 1.0){
             exp += 40;
