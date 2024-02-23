@@ -17,6 +17,15 @@ public class Text{
     @Column(columnDefinition = "BOOLEAN")
     boolean language;
 
+    public Text(String text, int difficulty, boolean language){
+        this.text = text;
+        this.difficulty = difficulty;
+        this.language = language;
+    }
+    public Text(){
+
+    }
+
     public String getText(){
         return text;
     }
