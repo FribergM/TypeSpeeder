@@ -121,8 +121,13 @@ public class Menu implements MenuService{
 
         }while(continueLoop);
     }
-
+    @Override
     public Language getLanguage(){
         return language;
+    }
+
+    @Override
+    public void setLanguage(Language language){
+        this.language = language;
     }
 }
