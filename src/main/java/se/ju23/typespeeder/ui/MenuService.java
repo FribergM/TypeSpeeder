@@ -17,4 +17,5 @@ public interface MenuService{
     void chooseLanguage();
     void changeLanguage();
     Language getLanguage();
+    void setLanguage(Language language);
 }

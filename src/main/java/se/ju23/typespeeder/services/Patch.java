@@ -8,17 +8,17 @@ public class Patch{
     public LocalDateTime releaseDateTime;
 
     public Patch(){
-        setPatchValues();
+        setPatchVersion();
+        setReleaseDateTime();
     }
-    private void setPatchValues(){
+    private void setPatchVersion(){
         patchVersion = "Version: 1.0.0";
-        String releaseDate = "2024-02-23 09:36:20";
-        formatReleaseDateTime(releaseDate);
     }
-
-    private void formatReleaseDateTime(String releaseDate){
+    private void setReleaseDateTime(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        releaseDateTime = LocalDateTime.parse(releaseDate,formatter);
+
+        releaseDateTime = LocalDateTime.of(2024,2,23,9,36,20);
+        releaseDateTime.format(formatter);
     }
 
     public String getPatchVersion(){

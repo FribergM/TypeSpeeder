@@ -42,7 +42,7 @@ public class PatchTest {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedDateTime = dateTimeValue.format(formatter);
 
-            //Added expected value.
+            //Added expected value. But I would prefer an assertTrue and match see if it matches a regex pattern for flexibility.
             assertEquals("2024-02-23 09:36:20",formattedDateTime, "'releaseDateTime' field should have format 'yyyy-MM-dd HH:mm:ss'.");
 
             Method getterMethod = someClass.getDeclaredMethod("getReleaseDateTime");
