@@ -8,6 +8,7 @@ import se.ju23.typespeeder.data.entities.Result;
 import se.ju23.typespeeder.data.entities.Text;
 import se.ju23.typespeeder.data.repositories.TextRepository;
 import se.ju23.typespeeder.services.LeaderboardService;
+import se.ju23.typespeeder.services.Patch;
 import se.ju23.typespeeder.services.Util;
 import se.ju23.typespeeder.ui.IO;
 import se.ju23.typespeeder.ui.LeaderboardMenu;
@@ -40,7 +41,15 @@ public class GameController{
     }
 
     public void run(){
+        newsDisplay();
+
         mainMenuSelection();
+    }
+    private void newsDisplay(){
+        Patch currentPatch = new Patch();
+        io.print(currentPatch.getPatchVersion());
+        io.print("Release Date:");
+        io.println(currentPatch.getReleaseDateTime());
     }
 
     private void mainMenuSelection(){
