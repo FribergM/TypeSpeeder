@@ -8,8 +8,10 @@ import se.ju23.typespeeder.data.entities.Result;
 import se.ju23.typespeeder.data.entities.Text;
 import se.ju23.typespeeder.data.repositories.TextRepository;
 import se.ju23.typespeeder.services.LeaderboardService;
+import se.ju23.typespeeder.services.NewsLetter;
 import se.ju23.typespeeder.services.Patch;
 import se.ju23.typespeeder.services.Util;
+import se.ju23.typespeeder.ui.English;
 import se.ju23.typespeeder.ui.IO;
 import se.ju23.typespeeder.ui.LeaderboardMenu;
 import se.ju23.typespeeder.ui.MenuService;
@@ -45,11 +47,27 @@ public class GameController{
 
         mainMenuSelection();
     }
+
     private void newsDisplay(){
-        Patch currentPatch = new Patch();
-        io.print(currentPatch.getPatchVersion());
-        io.print("Release Date:");
-        io.println(currentPatch.getReleaseDateTime());
+        menu.setLanguage(new English());
+        printPatchDetails();
+        io.println();
+        printNewsletter();
+
+        io.input(menu.getLanguage().enterKeyPrompt());
+        menu.setLanguage(null);
+    }
+
+    private void printPatchDetails(){
+        Patch patch = new Patch();
+        io.print(patch.getPatchVersion());
+        io.print("Release Date: "+patch.getReleaseDateTime());
+    }
+
+    private void printNewsletter(){
+        NewsLetter newsLetter = new NewsLetter();
+        io.println(newsLetter.getContent());
+        io.println("Published: "+newsLetter.getPublishDateTime());
     }
 
     private void mainMenuSelection(){
