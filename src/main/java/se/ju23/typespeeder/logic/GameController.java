@@ -51,7 +51,6 @@ public class GameController{
     private void newsDisplay(){
         menu.setLanguage(new English());
         printPatchDetails();
-        io.println();
         printNewsletter();
 
         io.input(menu.getLanguage().enterKeyPrompt());
@@ -60,14 +59,16 @@ public class GameController{
 
     private void printPatchDetails(){
         Patch patch = new Patch();
-        io.print(patch.getPatchVersion());
-        io.print("Release Date: "+patch.getReleaseDateTime());
+        io.print("\033[33m"+patch.getPatchVersion());
+        io.print("\033[33mRelease Date: "+patch.getReleaseDateTime());
+        io.println("\033[33m---------------------------------");
     }
 
     private void printNewsletter(){
         NewsLetter newsLetter = new NewsLetter();
-        io.println(newsLetter.getContent());
-        io.println("Published: "+newsLetter.getPublishDateTime());
+        io.println("\033[35m"+newsLetter.getContent());
+        io.print("\033[35mPublished: "+newsLetter.getPublishDateTime());
+        io.println("\033[35m------------------------------\033[0m");
     }
 
     private void mainMenuSelection(){
