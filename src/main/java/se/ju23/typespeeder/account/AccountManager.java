@@ -1,9 +1,9 @@
 package se.ju23.typespeeder.account;
 
-import se.ju23.typespeeder.data.Player;
-import se.ju23.typespeeder.data.PlayerRepository;
-import se.ju23.typespeeder.io.IO;
-import se.ju23.typespeeder.io.MenuService;
+import se.ju23.typespeeder.data.entities.Player;
+import se.ju23.typespeeder.data.repositories.PlayerRepository;
+import se.ju23.typespeeder.ui.IO;
+import se.ju23.typespeeder.ui.MenuService;
 
 import java.util.List;
 
@@ -15,64 +15,96 @@ public class AccountManager{
 
     public AccountManager(PlayerRepository playerRepo,
                           IO io,
-                          MenuService menu,
-                          Player currentPlayer){
+                          MenuService menu){
         this.playerRepo = playerRepo;
         this.io = io;
         this.menu = menu;
-        this.currentPlayer = currentPlayer;
     }
 
-    public boolean login(){
-        io.output(menu.enterUsernamePrompt());
+    public LoginStatus login(){
+
+        io.println(menu.getLanguage().enterUsernamePrompt());
         String username = io.input();
         if(username.equals("0")){
-            return false;
+            return new LoginStatus();
         }
-        io.output(menu.enterPasswordPrompt());
+        io.println(menu.getLanguage().enterPasswordPrompt());
         String password = io.input();
         if(password.equals("0")){
-            return false;
+            return new LoginStatus();
         }
-
         currentPlayer = playerRepo.findByUsernameAndPassword(username,password);
 
         if(currentPlayer == null){
-            io.output(menu.loginErrorPrompt());
-            return false;
+            io.println(menu.getLanguage().loginErrorPrompt());
+            return new LoginStatus();
+        }else if(currentPlayer.getUsername().equalsIgnoreCase(username) && currentPlayer.getPassword().equals(password)){
+            boolean loginStatus = true;
+            return new LoginStatus(currentPlayer,loginStatus);
         }else{
-            return true;
+            currentPlayer = null;
+            io.println(menu.getLanguage().loginErrorPrompt());
+            return new LoginStatus();
         }
 
     }
 
-    public boolean createAccount(){
+    public LoginStatus createAccount(){
         String username = getUsernameInput();
         if(username.equals("0")){
-            return false;
+            return new LoginStatus();
         }
         String password = getPasswordInput();
         if(password.equals("0")){
-            return false;
+            return new LoginStatus();
         }
         String alias = getAliasInput();
         if(alias.equals("0")){
-            return false;
+            return new LoginStatus();
         }
 
         currentPlayer = new Player(username,password,alias);
         playerRepo.save(currentPlayer);
+        currentPlayer = playerRepo.findByUsernameAndPassword(username,password);
+        boolean loginStatus = true;
 
-        return true;
+
+        return new LoginStatus(currentPlayer,loginStatus);
     }
 
-
+    public Player changeUsername(Player player){
+        String username = getUsernameInput();
+        if(username.equals("0")){
+            return player;
+        }
+        player.setUsername(username);
+        playerRepo.save(player);
+        return player;
+    }
+    public Player changePassword(Player player){
+        String password = getPasswordInput();
+        if(password.equals("0")){
+            return player;
+        }
+        player.setPassword(password);
+        playerRepo.save(player);
+        return player;
+    }
+    public Player changeAlias(Player player){
+        String alias = getAliasInput();
+        if(alias.equals("0")){
+            return player;
+        }
+        player.setAlias(alias);
+        playerRepo.save(player);
+        return player;
+    }
 
     private String getUsernameInput(){
         boolean validName;
         String username;
         do{
-            io.output(menu.updateUsernamePrompt());
+            io.println(menu.getLanguage().updateUsernamePrompt());
             username = io.input();
 
             if(username.equals("0")){
@@ -90,13 +122,13 @@ public class AccountManager{
 
         for(Player p : playerList){
             if(p.getUsername().equalsIgnoreCase(username)){
-                io.output(menu.uNameTakenPrompt());
+                io.println(menu.getLanguage().uNameTakenPrompt());
                 return false;
             }
         }
 
-        if(!username.matches("^[a-zA-Z]{4,15}$")){
-            io.output(menu.invalidUsernamePrompt());
+        if(!username.matches("^[a-zA-Z0-9]{4,16}$")){
+            io.println(menu.getLanguage().invalidUsernamePrompt());
             return false;
         }
         return true;
@@ -106,7 +138,7 @@ public class AccountManager{
         boolean validPassword;
         String password;
         do{
-            io.output(menu.updatePasswordPrompt());
+            io.println(menu.getLanguage().updatePasswordPrompt());
             password = io.input();
 
             if(password.equals("0")){
@@ -121,7 +153,7 @@ public class AccountManager{
 
     private boolean validatePassword(String password){
         if(!password.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{4,20}$")){
-            io.output(menu.invalidPasswordPrompt());
+            io.println(menu.getLanguage().invalidPasswordPrompt());
             return false;
         }
         return true;
@@ -131,7 +163,7 @@ public class AccountManager{
         boolean validAlias;
         String alias;
         do{
-            io.output(menu.updateAliasPrompt());
+            io.println(menu.getLanguage().updateAliasPrompt());
             alias = io.input();
 
             if(alias.equals("0")){
@@ -145,8 +177,8 @@ public class AccountManager{
     }
 
     private boolean validateAlias(String alias){
-        if(!alias.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{1,15}$")){
-            io.output(menu.invalidAliasPrompt());
+        if(!alias.matches("^[a-zA-Z0-9-_!@#$%^&*()+={}]{1,16}$")){
+            io.println(menu.getLanguage().invalidAliasPrompt());
             return false;
         }
         return true;

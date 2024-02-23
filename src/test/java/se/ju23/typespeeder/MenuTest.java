@@ -11,15 +11,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import org.mockito.Mockito;
-import se.ju23.typespeeder.io.Menu;
-import se.ju23.typespeeder.io.MenuService;
+import se.ju23.typespeeder.ui.Menu;
+import se.ju23.typespeeder.ui.MenuService;
 
 import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuTest {
-    //TODO Check with Oskar if its ok to change Class package name + add necessary components.
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -36,7 +35,7 @@ public class MenuTest {
     @Test
     public void testClassExists() {
         try {
-            Class<?> clazz = Class.forName("se.ju23.typespeeder.io.Menu");
+            Class<?> clazz = Class.forName("se.ju23.typespeeder.ui.Menu");
             assertNotNull(clazz, "The class 'Menu' should exist.");
         } catch (ClassNotFoundException e) {
             fail("The class 'Menu' does not exist.", e);
@@ -46,7 +45,7 @@ public class MenuTest {
     @Test
     public void testMethodExists() {
         try {
-            Class<?> clazz = Class.forName("se.ju23.typespeeder.io.Menu");
+            Class<?> clazz = Class.forName("se.ju23.typespeeder.ui.Menu");
             Method method = clazz.getMethod("displayMenu");
             assertNotNull(method, "The method 'displayMenu()' should exist in the class 'Menu'.");
         } catch (ClassNotFoundException e) {
@@ -59,7 +58,7 @@ public class MenuTest {
     @Test
     public void testMenuImplementsInterface() {
         try {
-            Class<?> menuClass = Class.forName("se.ju23.typespeeder.io.Menu");
+            Class<?> menuClass = Class.forName("se.ju23.typespeeder.ui.Menu");
             boolean implementsInterface = false;
 
             Class<?>[] interfaces = menuClass.getInterfaces();
